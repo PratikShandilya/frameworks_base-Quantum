@@ -4223,6 +4223,15 @@ public abstract class Context {
      * @hide
      */
     public static final String LONGSCREENSHOT_SERVICE = "longshot";
+   /**
+     * Use with {@link #getSystemService} to retrieve a
+     * {@link android.os.PocketManager} for accessing and listening to device pocket state.
+     *
+     * @hide
+     * @see #getSystemService
+     * @see android.os.PocketManager
+     */
+    public static final String POCKET_SERVICE = "pocket";
 
     /**
      * Determine whether the given permission is allowed for a particular
