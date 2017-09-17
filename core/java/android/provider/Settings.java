@@ -4477,10 +4477,7 @@ public final class Settings {
         /** @hide */
         private static final Validator FORCE_FULLSCREEN_CUTOUT_APPS_VALIDATOR = ANY_STRING_VALIDATOR;
 
-        /**
-        * Whether to blink battery light when low
-        * @hide
-        */
+
         public static final String INCALL_FEEDBACK_VIBRATE = "incall_feeedback_vibrate";
 
         /** @hide */
@@ -4901,6 +4898,16 @@ public final class Settings {
         public static final String SHOW_BATTERY_ESTIMATE = "show_battery_estimate";
 
         /**
+        * Whether to blink battery light when low
+        * @hide
+        */
+        public static final String BATTERY_LIGHT_LOW_BLINKING = "battery_light_low_blinking";
+
+        /** @hide */
+        public static final Validator BATTERY_LIGHT_LOW_BLINKING_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -5150,6 +5157,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(QS_COLUMNS_PORTRAIT);
             PRIVATE_SETTINGS.add(QS_COLUMNS_LANDSCAPE);
             PRIVATE_SETTINGS.add(NOTIFICATION_THEME);
+            PRIVATE_SETTINGS.add(BATTERY_LIGHT_LOW_BLINKING);
         }
 
         /**
@@ -5312,6 +5320,7 @@ public final class Settings {
             VALIDATORS.put(QS_COLUMNS_PORTRAIT, QS_COLUMNS_PORTRAIT_VALIDATOR);
             VALIDATORS.put(QS_COLUMNS_LANDSCAPE, QS_COLUMNS_LANDSCAPE_VALIDATOR);
             VALIDATORS.put(NOTIFICATION_THEME, NOTIFICATION_THEME_VALIDATOR);
+            VALIDATORS.put(BATTERY_LIGHT_LOW_BLINKING, BATTERY_LIGHT_LOW_BLINKING_VALIDATOR);
         }
 
         /**
