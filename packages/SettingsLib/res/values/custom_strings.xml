@@ -7,4 +7,7 @@
     <string name="bluetooth_a2dp_codec_channel_mode_stereo">Stereo</string>
     <string name="bluetooth_a2dp_codec_channel_mode_dual_channel">Dual Channel</string>
 
+    <!-- For estimated battery in QS -->
+    <string name="power_discharge_by_only_short">Until %1$s</string>
+
 </resources>
