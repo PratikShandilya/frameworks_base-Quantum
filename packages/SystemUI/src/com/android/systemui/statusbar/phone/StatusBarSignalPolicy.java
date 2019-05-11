@@ -451,8 +451,8 @@ public class StatusBarSignalPolicy implements NetworkControllerImpl.SignalCallba
                     typeId == that.typeId &&
                     roaming == that.roaming &&
                     needsLeadingPadding == that.needsLeadingPadding &&
-                    Objects.equals(typeContentDescription, that.typeContentDescription) &&
-                    volteId == that.volteId;
+                    provisioned == that.provisioned &&
+                    Objects.equals(typeContentDescription, that.typeContentDescription);
         }
 
         @Override
