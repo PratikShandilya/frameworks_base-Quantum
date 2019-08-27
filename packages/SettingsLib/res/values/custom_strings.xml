@@ -22,4 +22,10 @@
     <!-- Description for the screen zoom level that makes interface elements smallest. [CHAR LIMIT=24] -->
     <string name="screen_zoom_summary_smallest">Smallest</string>
 
+    <!-- Bluetooth Audio Codec Channel Mode -->
+    <string name="bluetooth_a2dp_codec_channel_mode_default">Use System Selection (Default)</string>
+    <string name="bluetooth_a2dp_codec_channel_mode_mono">Mono</string>
+    <string name="bluetooth_a2dp_codec_channel_mode_stereo">Stereo</string>
+    <string name="bluetooth_a2dp_codec_channel_mode_dual_channel">Dual Channel</string>
+
 </resources>
