@@ -78,6 +78,7 @@ public class BatteryMeterView extends LinearLayout implements
     private boolean mShowEstimate;
     private boolean mForceShowPercent;
     private boolean mShowPercentAvailable;
+    private boolean mCharging;
 
     private int mDarkModeBackgroundColor;
     private int mDarkModeFillColor;
@@ -94,6 +95,7 @@ public class BatteryMeterView extends LinearLayout implements
 
     private int mNonAdaptedForegroundColor;
     private int mNonAdaptedBackgroundColor;
+    private int mPercentageSize;
 
     public BatteryMeterView(Context context) {
         this(context, null, 0);
@@ -113,6 +115,7 @@ public class BatteryMeterView extends LinearLayout implements
                 defStyle, 0);
         final int frameColor = atts.getColor(R.styleable.BatteryMeterView_frameColor,
                 context.getColor(R.color.meter_background_color));
+	mPercentageSize = atts.getDimensionPixelSize(R.styleable.BatteryMeterView_textSize, 0);
         mDrawable = new BatteryMeterDrawableBase(context, frameColor);
         atts.recycle();
 
@@ -289,7 +292,6 @@ public class BatteryMeterView extends LinearLayout implements
             mBatteryPercentView.setText(
                     NumberFormat.getPercentInstance().format(mLevel / 100f));
         }
-    }
 
     private void updateShowPercent() {
         final boolean showing = mBatteryPercentView != null;
