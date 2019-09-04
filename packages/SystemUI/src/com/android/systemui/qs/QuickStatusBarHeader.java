@@ -117,7 +117,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private ImageView mRingerModeIcon;
     private TextView mRingerModeTextView;
     private BatteryMeterView mBatteryMeterView;
-    private BatteryMeterView mBatteryRemainingIcon;
+	private BatteryMeterView mBatteryRemainingIcon;
     private Clock mClockView;
     private DateView mDateView;
 
@@ -125,8 +125,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private ZenModeController mZenController;
     /** Counts how many times the long press tooltip has been shown to the user. */
     private int mShownCount;
-
-    private boolean mBatteryInQS;
+	private boolean mBatteryInQS;
 
     private final BroadcastReceiver mRingerReceiver = new BroadcastReceiver() {
         @Override
@@ -191,15 +190,18 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             mBatteryMeterView = null;
 
             mBatteryRemainingIcon.isQsbHeader();
-            mBatteryRemainingIcon.setShowEstimate(true);
+            mBatteryRemainingIcon.setShowEstimate();
+			mBatteryRemainingIcon.setOnClickListener(this);
         } else {
             ((ViewGroup) mBatteryRemainingIcon.getParent()).removeView(mBatteryRemainingIcon);
             mBatteryRemainingIcon = null;
 
             mBatteryMeterView.isQsbHeader();
-            mBatteryMeterView.setShowEstimate(true);
+            mBatteryMeterView.setShowEstimate();
+			mBatteryMeterView.setOnClickListener(this);
         }
-
+        mBatteryMeterView.setForceShowPercent(true);
+        mBatteryMeterView.setOnClickListener(this);
         mClockView = findViewById(R.id.clock);
         mClockView.setOnClickListener(this);
         mDateView = findViewById(R.id.date);
@@ -460,7 +462,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         if (v == mClockView) {
             Dependency.get(ActivityStarter.class).postStartActivityDismissingKeyguard(new Intent(
                     AlarmClock.ACTION_SHOW_ALARMS),0);
-        } else if (v == mBatteryMeterView) {
+        } else if (v == mBatteryMeterView || v == mBatteryRemainingIcon) {
             Dependency.get(ActivityStarter.class).postStartActivityDismissingKeyguard(new Intent(
                     Intent.ACTION_POWER_USAGE_SUMMARY),0);
         }
