@@ -68,6 +68,7 @@ public class KeyguardStatusBarView extends RelativeLayout
     private static final int LAYOUT_NO_CUTOUT = 2;
 
     private boolean mShowPercentAvailable;
+    private boolean mHasBigCutout;
     private boolean mBatteryCharging;
     private boolean mKeyguardUserSwitcherShowing;
     private boolean mBatteryListening;
