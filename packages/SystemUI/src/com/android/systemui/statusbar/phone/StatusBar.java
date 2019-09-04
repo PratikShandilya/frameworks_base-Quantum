@@ -427,7 +427,6 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
     private View mReportRejectedTouch;
 
     private int mMaxAllowedKeyguardNotifications;
-    private int mMaxAllowedKeyguardNotificationsAmbientPlay;
 
     private boolean mExpandedVisible;
 
@@ -1230,7 +1229,6 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
         try {
             if (mAmbientIndicationContainer != null){
                 mAmbientIndicationContainer.setVisibility(View.VISIBLE);
-                mViewHierarchyManager.updateRowStates();
                 ((AmbientIndicationContainer) mAmbientIndicationContainer).showIndication();
             }
         } catch (Exception e) {
@@ -1246,7 +1244,6 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
                     if (mAmbientIndicationContainer != null){
                         ((AmbientIndicationContainer) mAmbientIndicationContainer).hideIndication();
                         mAmbientIndicationContainer.setVisibility(View.GONE);
-                        mViewHierarchyManager.updateRowStates();
                         if (forceClear){
                             ((AmbientIndicationContainer) mAmbientIndicationContainer).setIndication(null, null);
                         }
@@ -3495,9 +3492,6 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
         mMaxAllowedKeyguardNotifications = res.getInteger(
                 R.integer.keyguard_max_notification_count);
 
-        mMaxAllowedKeyguardNotificationsAmbientPlay = res.getInteger(
-            R.integer.keyguard_max_notification_count_ambient_play);
-
         if (DEBUG) Log.v(TAG, "defineSlots");
     }
 
@@ -4502,14 +4496,9 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
     @Override
     public int getMaxNotificationsWhileLocked(boolean recompute) {
         if (recompute) {
-            int maxAllowedKeyguardNotifications = mMaxAllowedKeyguardNotifications;
-            if (mAmbientIndicationContainer != null &&
-                mAmbientIndicationContainer.getVisibility() == View.VISIBLE){
-                maxAllowedKeyguardNotifications = mMaxAllowedKeyguardNotificationsAmbientPlay;
-            }
             mMaxKeyguardNotifications = Math.max(1,
                     mNotificationPanel.computeMaxKeyguardNotifications(
-                            maxAllowedKeyguardNotifications));
+                            mMaxAllowedKeyguardNotifications));
             return mMaxKeyguardNotifications;
         }
         return mMaxKeyguardNotifications;
