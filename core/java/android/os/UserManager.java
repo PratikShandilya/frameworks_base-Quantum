@@ -1140,7 +1140,8 @@ public class UserManager {
      */
     public static boolean supportsMultipleUsers() {
         return getMaxSupportedUsers() > 1
-                && SystemProperties.getBoolean("fw.show_multiuserui", false);
+                && SystemProperties.getBoolean("fw.show_multiuserui",
+                Resources.getSystem().getBoolean(R.bool.config_enableMultiUserUI));
     }
 
     /**
@@ -2641,7 +2642,8 @@ public class UserManager {
                 return 1;
             }
         }
-        return SystemProperties.getInt("fw.max_users", 1);
+        return SystemProperties.getInt("fw.max_users",
+                Resources.getSystem().getInteger(R.integer.config_multiuserMaximumUsers));
     }
 
     /**
