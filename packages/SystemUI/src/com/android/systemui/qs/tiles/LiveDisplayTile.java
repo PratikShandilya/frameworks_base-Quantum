@@ -20,7 +20,6 @@ package com.android.systemui.qs.tiles;
 import static com.android.internal.custom.hardware.LiveDisplayManager.FEATURE_MANAGED_OUTDOOR_MODE;
 import static com.android.internal.custom.hardware.LiveDisplayManager.MODE_AUTO;
 import static com.android.internal.custom.hardware.LiveDisplayManager.MODE_DAY;
-import static com.android.internal.custom.hardware.LiveDisplayManager.MODE_NIGHT;
 import static com.android.internal.custom.hardware.LiveDisplayManager.MODE_OFF;
 import static com.android.internal.custom.hardware.LiveDisplayManager.MODE_OUTDOOR;
 
@@ -31,6 +30,7 @@ import android.database.ContentObserver;
 import android.provider.Settings;
 import android.os.Handler;
 import android.os.UserHandle;
+import android.provider.Settings;
 import android.service.quicksettings.Tile;
 
 import com.android.internal.app.ColorDisplayController;
@@ -62,7 +62,6 @@ public class LiveDisplayTile extends QSTileImpl<LiveDisplayState> {
 
     private int mDayTemperature;
 
-    private final boolean mNightDisplayAvailable;
     private final boolean mOutdoorModeAvailable;
 
     private final LiveDisplayManager mLiveDisplay;
@@ -71,7 +70,6 @@ public class LiveDisplayTile extends QSTileImpl<LiveDisplayState> {
 
     public LiveDisplayTile(QSHost host) {
         super(host);
-        mNightDisplayAvailable = ColorDisplayController.isAvailable(mContext);
 
         Resources res = mContext.getResources();
         TypedArray typedArray = res.obtainTypedArray(R.array.live_display_drawables);
@@ -108,7 +106,7 @@ public class LiveDisplayTile extends QSTileImpl<LiveDisplayState> {
 
     @Override
     public boolean isAvailable() {
-        return !mNightDisplayAvailable || mOutdoorModeAvailable;
+        return !ColorDisplayController.isAvailable(mContext);
     }
 
     @Override
@@ -186,12 +184,10 @@ public class LiveDisplayTile extends QSTileImpl<LiveDisplayState> {
 
         while (true) {
             nextMode = Integer.valueOf(mValues[next]);
-            // Skip outdoor mode if it's unsupported, skip the day setting
-            // if it's the same as the off setting, and skip night display
-            // on HWC2
+            // Skip outdoor mode if it's unsupported, and skip the day setting
+            // if it's the same as the off setting
             if ((!mOutdoorModeAvailable && nextMode == MODE_OUTDOOR) ||
-                    (mDayTemperature == OFF_TEMPERATURE && nextMode == MODE_DAY) ||
-                    (mNightDisplayAvailable && (nextMode == MODE_DAY || nextMode == MODE_NIGHT))) {
+                    (mDayTemperature == OFF_TEMPERATURE && nextMode == MODE_DAY)) {
                 next++;
                 if (next >= mValues.length) {
                     next = 0;
