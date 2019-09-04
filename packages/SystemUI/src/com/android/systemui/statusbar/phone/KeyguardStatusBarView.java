@@ -57,8 +57,6 @@ import com.android.systemui.statusbar.policy.UserInfoController.OnUserInfoChange
 import com.android.systemui.statusbar.policy.UserInfoControllerImpl;
 import com.android.systemui.statusbar.policy.UserSwitcherController;
 
-import com.android.internal.util.custom.cutout.CutoutUtils;
-
 /**
  * The header group on Keyguard.
  */
@@ -70,8 +68,6 @@ public class KeyguardStatusBarView extends RelativeLayout
     private static final int LAYOUT_NO_CUTOUT = 2;
 
     private boolean mShowPercentAvailable;
-    private boolean mHasBigCutout;
-    private boolean mShouldEnablePercentInsideIcon = true;
     private boolean mBatteryCharging;
     private boolean mKeyguardUserSwitcherShowing;
     private boolean mBatteryListening;
@@ -99,8 +95,6 @@ public class KeyguardStatusBarView extends RelativeLayout
      * Draw this many pixels into the left/right side of the cutout to optimally use the space
      */
     private int mCutoutSideNudge = 0;
-
-    private int mCurrentOrientation = -1;
 
     public KeyguardStatusBarView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -157,11 +151,6 @@ public class KeyguardStatusBarView extends RelativeLayout
         lp.setMarginStart(
                 getResources().getDimensionPixelSize(R.dimen.keyguard_carrier_text_margin));
         mCarrierLabel.setLayoutParams(lp);
-        if (mCurrentOrientation != newConfig.orientation){
-            mCurrentOrientation = newConfig.orientation;
-            mShouldEnablePercentInsideIcon = mCurrentOrientation != Configuration.ORIENTATION_LANDSCAPE;
-            updateVisibilities();
-        }
 
         lp = (MarginLayoutParams) getLayoutParams();
         lp.height =  getResources().getDimensionPixelSize(
@@ -179,7 +168,6 @@ public class KeyguardStatusBarView extends RelativeLayout
                 R.dimen.display_cutout_margin_consumption);
         mShowPercentAvailable = getContext().getResources().getBoolean(
                 com.android.internal.R.bool.config_battery_percentage_setting_available);
-        mHasBigCutout = CutoutUtils.hasBigCutout(getContext());
     }
 
     private void updateVisibilities() {
@@ -201,7 +189,7 @@ public class KeyguardStatusBarView extends RelativeLayout
                 mMultiUserSwitch.setVisibility(View.GONE);
             }
         }
-        mBatteryView.setForceShowPercent(mBatteryCharging && mShowPercentAvailable && (!mHasBigCutout && mShouldEnablePercentInsideIcon));
+        mBatteryView.setForceShowPercent(mBatteryCharging && mShowPercentAvailable);
     }
 
     private void updateSystemIconsLayoutParams() {
@@ -368,13 +356,6 @@ public class KeyguardStatusBarView extends RelativeLayout
     @Override
     public void onPowerSaveChanged(boolean isPowerSave) {
         // could not care less
-    }
-
-    @Override
-    public void onOverlayChanged() {
-        mShowPercentAvailable = getContext().getResources().getBoolean(
-                com.android.internal.R.bool.config_battery_percentage_setting_available);
-        mHasBigCutout = CutoutUtils.hasBigCutout(getContext());
     }
 
     public void setKeyguardUserSwitcher(KeyguardUserSwitcher keyguardUserSwitcher) {
