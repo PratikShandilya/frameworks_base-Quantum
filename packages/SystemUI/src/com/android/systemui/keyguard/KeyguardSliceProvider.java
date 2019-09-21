@@ -245,6 +245,14 @@ public class KeyguardSliceProvider extends SliceProvider implements
         public void updateLockscreenUnit() {
             useMetricUnit = Settings.System.getIntForUser(mContentResolver, Settings.System.WEATHER_LOCKSCREEN_UNIT, getContext().getResources().getInteger(com.android.internal.R.integer.weather_lockscreen_default_unit), UserHandle.USER_CURRENT) == 0;
         }
+    /**
+     * Return true if DND is enabled suppressing notifications.
+     */
+    protected boolean isDndSuppressingNotifications() {
+        boolean suppressingNotifications = (mZenModeController.getConfig().suppressedVisualEffects
+                & NotificationManager.Policy.SUPPRESSED_EFFECT_NOTIFICATION_LIST) != 0;
+        return mZenModeController.getZen() != Settings.Global.ZEN_MODE_OFF
+                && suppressingNotifications;
     }
 
     @Override
