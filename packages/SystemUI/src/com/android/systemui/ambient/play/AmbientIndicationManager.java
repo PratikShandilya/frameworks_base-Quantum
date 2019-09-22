@@ -36,7 +36,6 @@ import android.os.BatteryManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.UserHandle;
-import android.os.SystemProperties;
 import android.provider.Settings;
 import android.telecom.TelecomManager;
 import android.util.Log;
@@ -69,7 +68,6 @@ public class AmbientIndicationManager {
     private int mCurrentNetworkStatus = -1;
     private AmbientPlayQuietPeriod mAmbientPlayQuietPeriod;
     public boolean DEBUG = false;
-    private static final String PROPERTY_AMBIENT_PLAY_RECORDING = "sys.ambientplay.recording";
 
     private List<AmbientIndicationManagerCallback> mCallbacks;
 
@@ -407,9 +405,5 @@ public class AmbientIndicationManager {
                 NotificationManager.IMPORTANCE_MIN);
         mNotificationManager.createNotificationChannel(channel);
         mNotificationManager.notify(122306791, mBuilder.build());
-    }
-
-    public void updateRecordingProp(boolean isRecording){
-        SystemProperties.set(PROPERTY_AMBIENT_PLAY_RECORDING, isRecording ? "1" : "0");
     }
 }

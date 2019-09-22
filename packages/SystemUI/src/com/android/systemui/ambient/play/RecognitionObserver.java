@@ -109,7 +109,6 @@ public class RecognitionObserver implements AmbientIndicationManagerCallback {
         if (mRecorderThread == null){
             mRecorderThread = new RecorderThread();
         }
-        mManager.updateRecordingProp(true);
         try{
             mRecorderThread.start();
         }catch(Exception e){
@@ -119,7 +118,6 @@ public class RecognitionObserver implements AmbientIndicationManagerCallback {
     }
 
     private void stopRecording() {
-        mManager.updateRecordingProp(false);
         if (!mIsRecording){
             return;
         }
