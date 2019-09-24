@@ -28,6 +28,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.LinkProperties;
 import android.net.Network;
@@ -80,6 +81,7 @@ public class NetworkTraffic extends TextView {
     private long mLastRxBytes;
     private long mLastUpdateTime;
     private int mTextSize;
+    private String mTextFontFamily;
     private boolean mAutoHide;
     private long mAutoHideThreshold;
     private int mUnits;
@@ -119,6 +121,7 @@ public class NetworkTraffic extends TextView {
 
         final Resources resources = getResources();
         mTextSize = resources.getDimensionPixelSize(R.dimen.net_traffic_text_size);
+        mTextFontFamily = resources.getString(com.android.internal.R.string.config_headlineFontFamilyMedium);
 
         mNetworkTrafficIsVisible = false;
 
@@ -166,6 +169,7 @@ public class NetworkTraffic extends TextView {
 
         mContext.registerReceiver(mIntentReceiver,
                 new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        setTypeface(Typeface.create(mTextFontFamily, Typeface.NORMAL));
         mObserver.observe();
         updateSettings();
     }
