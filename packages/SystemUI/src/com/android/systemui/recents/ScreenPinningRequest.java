@@ -30,9 +30,11 @@ import android.os.RemoteException;
 import android.util.DisplayMetrics;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
+import android.view.IWindowManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.WindowManagerGlobal;
 import android.view.accessibility.AccessibilityManager;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
@@ -53,12 +55,15 @@ import java.util.ArrayList;
 import static com.android.systemui.util.leak.RotationUtils.ROTATION_LANDSCAPE;
 import static com.android.systemui.util.leak.RotationUtils.ROTATION_SEASCAPE;
 
+import com.android.internal.util.custom.NavbarUtils;
+
 public class ScreenPinningRequest implements View.OnClickListener {
 
     private final Context mContext;
 
     private final AccessibilityManager mAccessibilityService;
     private final WindowManager mWindowManager;
+  private final IWindowManager mWindowManagerService;
 
     private RequestWindowView mRequestWindow;
 
@@ -71,6 +76,7 @@ public class ScreenPinningRequest implements View.OnClickListener {
                 mContext.getSystemService(Context.ACCESSIBILITY_SERVICE);
         mWindowManager = (WindowManager)
                 mContext.getSystemService(Context.WINDOW_SERVICE);
+        mWindowManagerService = WindowManagerGlobal.getWindowManagerService();
     }
 
     public void clearPrompt() {
@@ -287,6 +293,20 @@ public class ScreenPinningRequest implements View.OnClickListener {
             final int backBgVisibility = touchExplorationEnabled ? View.INVISIBLE : View.VISIBLE;
             mLayout.findViewById(R.id.screen_pinning_back_bg).setVisibility(backBgVisibility);
             mLayout.findViewById(R.id.screen_pinning_back_bg_light).setVisibility(backBgVisibility);
+            int description =  R.string.screen_pinning_description;
+
+            int screenPinningExitMode = mContext.getResources().getInteger(com.android.internal.R.integer.config_screenPinningExitMode);
+            if (screenPinningExitMode == 1) {
+                description = NavbarUtils.isEnabled(mContext) ? 
+                                R.string.screen_pinning_description_back_nav_visible :
+                                R.string.screen_pinning_description_back;
+            }else if (screenPinningExitMode == 2) {
+                description = NavbarUtils.isEnabled(mContext) ? 
+                                R.string.screen_pinning_description_power_nav_visible :
+                                R.string.screen_pinning_description_power;
+            }
+            ((TextView) mLayout.findViewById(R.id.screen_pinning_description))
+                    .setText(description);
 
             addView(mLayout, getRequestLayoutParams(rotation));
         }
@@ -312,7 +332,7 @@ public class ScreenPinningRequest implements View.OnClickListener {
 
         private boolean hasNavigationBar() {
             try {
-                return mWindowManagerService.hasNavigationBar();
+                return mWindowManagerService.hasNavigationBar() && NavbarUtils.isEnabled(mContext);
             } catch (RemoteException e) {
                 // ignore
             }

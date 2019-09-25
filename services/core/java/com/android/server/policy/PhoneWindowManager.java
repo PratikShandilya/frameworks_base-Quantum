@@ -155,6 +155,7 @@ import static com.android.server.wm.WindowManagerPolicyProto.WINDOW_MANAGER_DRAW
 
 import android.annotation.Nullable;
 import android.app.ActivityManager;
+import android.app.ActivityManagerNative;
 import android.app.ActivityManagerInternal;
 import android.app.ActivityManagerInternal.SleepToken;
 import android.app.ActivityThread;
@@ -1815,6 +1816,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     private void powerLongPress() {
         int behavior = mResolvedLongPressOnPowerBehavior;
+        if (getScreenPinningExitMode() == 2 && isScreenOn()) {
+            mPowerKeyHandled = true;
+            exitScreenPinningMode();
+            return;
+        }
         switch (behavior) {
         case LONG_PRESS_POWER_NOTHING:
             break;
@@ -1884,7 +1890,10 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     private void backLongPress() {
         mBackKeyHandled = true;
-
+        if (getScreenPinningExitMode() == 1 && isScreenOn()) {
+            exitScreenPinningMode();
+            return;
+        }
         switch (mLongPressOnBackBehavior) {
             case LONG_PRESS_BACK_NOTHING:
                 break;
@@ -1897,6 +1906,25 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     startActivityAsUser(intent, UserHandle.CURRENT_OR_SELF);
                 }
                 break;
+        }
+    }
+
+    private int getScreenPinningExitMode() {
+        try {
+            if (!ActivityManagerNative.getDefault().isInLockTaskMode()) {
+                return -1;
+            }
+        } catch (RemoteException e) {
+            // ignore
+        }
+        return mContext.getResources().getInteger(com.android.internal.R.integer.config_screenPinningExitMode);
+    }
+
+    private void exitScreenPinningMode() {
+        try {
+            ActivityManagerNative.getDefault().stopSystemLockTaskMode();
+        } catch (RemoteException e) {
+            // ignore
         }
     }
 
