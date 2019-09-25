@@ -17,12 +17,9 @@
 package com.android.systemui.statusbar.phone;
 
 import android.content.Context;
-import android.os.RemoteException;
 import android.os.SystemClock;
 import android.util.Slog;
-import android.view.IWindowManager;
 import android.view.WindowManager;
-import android.view.WindowManagerGlobal;
 import android.widget.Toast;
 
 import com.android.systemui.R;
@@ -39,13 +36,11 @@ public class ScreenPinningNotify {
     private static final long SHOW_TOAST_MINIMUM_INTERVAL = 1000;
 
     private final Context mContext;
-    private final IWindowManager mWindowManagerService;
     private Toast mLastToast;
     private long mLastShowToastTime;
 
     public ScreenPinningNotify(Context context) {
         mContext = context;
-        mWindowManagerService = WindowManagerGlobal.getWindowManagerService();
     }
 
     /** Show "Screen pinned" toast. */
@@ -68,9 +63,8 @@ public class ScreenPinningNotify {
         if (mLastToast != null) {
             mLastToast.cancel();
         }
-        mLastToast = makeAllUserToastAndShow(!hasNavigationBar()
-                ? (supportsGesturesOnFP() ? R.string.screen_pinning_toast_no_navbar_fpsensor : R.string.screen_pinning_toast_no_navbar)
-                : isRecentsButtonVisible
+
+        mLastToast = makeAllUserToastAndShow(isRecentsButtonVisible
                 ? R.string.screen_pinning_toast
                 : R.string.screen_pinning_toast_recents_invisible);
         mLastShowToastTime = showToastTime;
@@ -80,19 +74,6 @@ public class ScreenPinningNotify {
         Toast toast = SysUIToast.makeText(mContext, resId, Toast.LENGTH_LONG);
         toast.show();
         return toast;
-    }
-
-    private boolean hasNavigationBar() {
-        try {
-            return mWindowManagerService.hasNavigationBar() && NavbarUtils.isEnabled(mContext);
-        } catch (RemoteException e) {
-            // ignore
-        }
-        return false;
-     }
-
-    private boolean supportsGesturesOnFP() {
-        return mContext.getResources().getBoolean(com.android.internal.R.bool.config_supportsGesturesOnFingerprintSensor);
     }
 
 }
