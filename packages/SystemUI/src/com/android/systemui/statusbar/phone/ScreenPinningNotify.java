@@ -68,12 +68,20 @@ public class ScreenPinningNotify {
         if (mLastToast != null) {
             mLastToast.cancel();
         }
-
-        mLastToast = makeAllUserToastAndShow(!hasNavigationBar()
-                ? R.string.screen_pinning_toast_no_navbar
-                : isRecentsButtonVisible
+        mLastToast = makeAllUserToastAndShow(isRecentsButtonVisible
                 ? R.string.screen_pinning_toast
                 : R.string.screen_pinning_toast_recents_invisible);
+
+            int screenPinningExitMode = mContext.getResources().getInteger(com.android.internal.R.integer.config_screenPinningExitMode);
+            if (screenPinningExitMode == 1) {
+                 mLastToast = makeAllUserToastAndShow(NavbarUtils.isEnabled(mContext) ?
+                               com.android.internal.R.string.lock_to_app_toast_back_nav_visible :
+                                com.android.internal.R.string.lock_to_app_toast_back);
+            }else if (screenPinningExitMode == 2) {
+                 mLastToast = makeAllUserToastAndShow(NavbarUtils.isEnabled(mContext) ?
+                                com.android.internal.R.string.lock_to_app_toast_power_nav_visible :
+                                com.android.internal.R.string.lock_to_app_toast_power);
+            }
         mLastShowToastTime = showToastTime;
     }
 
