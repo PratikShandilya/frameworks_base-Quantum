@@ -25,8 +25,6 @@ import android.widget.Toast;
 import com.android.systemui.R;
 import com.android.systemui.SysUIToast;
 
-import com.android.internal.util.custom.NavbarUtils;
-
 /**
  *  Helper to manage showing/hiding a image to notify them that they are entering or exiting screen
  *  pinning mode. All exposed methods should be called from a handler thread.
@@ -64,7 +62,9 @@ public class ScreenPinningNotify {
             mLastToast.cancel();
         }
 
-        mLastToast = makeAllUserToastAndShow(isRecentsButtonVisible
+        mLastToast = makeAllUserToastAndShow(!hasNavigationBar()
+                ? R.string.screen_pinning_toast_no_navbar
+                : isRecentsButtonVisible
                 ? R.string.screen_pinning_toast
                 : R.string.screen_pinning_toast_recents_invisible);
         mLastShowToastTime = showToastTime;
@@ -75,5 +75,14 @@ public class ScreenPinningNotify {
         toast.show();
         return toast;
     }
+
+    private boolean hasNavigationBar() {
+        try {
+            return mWindowManagerService.hasNavigationBar();
+        } catch (RemoteException e) {
+            // ignore
+        }
+        return false;
+     }
 
 }

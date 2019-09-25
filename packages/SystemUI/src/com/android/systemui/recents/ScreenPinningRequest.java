@@ -53,8 +53,6 @@ import java.util.ArrayList;
 import static com.android.systemui.util.leak.RotationUtils.ROTATION_LANDSCAPE;
 import static com.android.systemui.util.leak.RotationUtils.ROTATION_SEASCAPE;
 
-import com.android.internal.util.custom.NavbarUtils;
-
 public class ScreenPinningRequest implements View.OnClickListener {
 
     private final Context mContext;
@@ -250,16 +248,18 @@ public class ScreenPinningRequest implements View.OnClickListener {
                 mLayout.findViewById(R.id.screen_pinning_recents_group).setVisibility(VISIBLE);
                 mLayout.findViewById(R.id.screen_pinning_home_bg_light).setVisibility(INVISIBLE);
                 mLayout.findViewById(R.id.screen_pinning_home_bg).setVisibility(INVISIBLE);
-
-                descriptionStringResId = touchExplorationEnabled
+                descriptionStringResId = !hasNavigationBar()
+                        ? R.string.screen_pinning_description_no_navbar
+                        : touchExplorationEnabled
                         ? R.string.screen_pinning_description_accessible
                         : R.string.screen_pinning_description;
             } else {
                 mLayout.findViewById(R.id.screen_pinning_recents_group).setVisibility(INVISIBLE);
                 mLayout.findViewById(R.id.screen_pinning_home_bg_light).setVisibility(VISIBLE);
                 mLayout.findViewById(R.id.screen_pinning_home_bg).setVisibility(VISIBLE);
-
-                descriptionStringResId = touchExplorationEnabled
+                descriptionStringResId = !hasNavigationBar()
+                        ? R.string.screen_pinning_description_no_navbar
+                        : touchExplorationEnabled
                         ? R.string.screen_pinning_description_recents_invisible_accessible
                         : R.string.screen_pinning_description_recents_invisible;
             }
@@ -308,6 +308,15 @@ public class ScreenPinningRequest implements View.OnClickListener {
                     linearLayout.addView(childList.get(i));
                 }
             }
+        }
+
+        private boolean hasNavigationBar() {
+            try {
+                return mWindowManagerService.hasNavigationBar();
+            } catch (RemoteException e) {
+                // ignore
+            }
+            return false;
         }
 
         @Override
