@@ -4995,4 +4995,9 @@
     <!-- Strings for car -->
     <!-- String displayed when loading a user in the car [CHAR LIMIT=30] -->
     <string name="car_loading_profile">Loading</string>
+
+    <!-- Strings for Bluetooth service -->
+    <!-- toast message informing user that Bluetooth stays on after airplane mode is turned on. [CHAR LIMIT=NONE] -->
+    <string name="bluetooth_airplane_mode_toast">Bluetooth will stay on during airplane mode</string>
+
 </resources>

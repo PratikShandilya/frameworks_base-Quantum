@@ -3423,4 +3423,9 @@
   <java-symbol type="integer" name="db_wal_truncate_size" />
 
   <java-symbol type="string" name="config_defaultAssistantComponentName" />
+
+
+  <!-- For Bluetooth service -->
+  <java-symbol type="string" name="bluetooth_airplane_mode_toast" />
+
 </resources>
