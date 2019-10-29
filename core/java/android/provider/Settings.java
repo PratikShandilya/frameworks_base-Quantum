@@ -5549,6 +5549,18 @@ public final class Settings {
         public static final Validator FOD_GESTURE_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
+         * Whether allowing pocket service to register sensors and dispatch informations.
+         *   0 = disabled
+         *   1 = enabled
+         * @author Carlo Savignano
+         * @hide
+         */
+        public static final String POCKET_JUDGE = "pocket_judge";
+
+        /** @hide */
+        public static final Validator POCKET_JUDGE_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -5828,6 +5840,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(LOCKSCREEN_TRANSLUCENT_NOTIFICATIONS_BG_ENABLED);
             PRIVATE_SETTINGS.add(LOCKSCREEN_ROTATION);
             PRIVATE_SETTINGS.add(FOD_GESTURE);
+            PRIVATE_SETTINGS.add(POCKET_JUDGE);
         }
 
         /**
@@ -6017,6 +6030,7 @@ public final class Settings {
             VALIDATORS.put(LOCKSCREEN_TRANSLUCENT_NOTIFICATIONS_BG_ENABLED, LOCKSCREEN_TRANSLUCENT_NOTIFICATIONS_BG_ENABLED_VALIDATOR);
             VALIDATORS.put(LOCKSCREEN_ROTATION, LOCKSCREEN_ROTATION_VALIDATOR);
             VALIDATORS.put(FOD_GESTURE, FOD_GESTURE_VALIDATOR);
+            VALIDATORS.put(POCKET_JUDGE, POCKET_JUDGE_VALIDATOR);
         }
 
         /**
