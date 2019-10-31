@@ -58,6 +58,7 @@ import com.android.systemui.qs.tiles.VpnTile;
 import com.android.systemui.qs.tiles.WifiTile;
 import com.android.systemui.qs.tiles.WorkModeTile;
 import com.android.systemui.util.leak.GarbageMonitor;
+import com.android.systemui.qs.tiles.ScreenRecordTile;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -98,6 +99,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<ReadingModeTile> mReadingModeTileProvider;
     private final Provider<PowerShareTile> mPowerShareTileProvider;
     private final Provider<AODTile> mAODTileProvider;
+    private final Provider<ScreenRecordTile> mScreenRecordTileProvider;
 
     private QSTileHost mHost;
 
@@ -131,7 +133,8 @@ public class QSFactoryImpl implements QSFactory {
             Provider<LiveDisplayTile> liveDisplayTileProvider,
             Provider<ReadingModeTile> readingModeTileProvider,
             Provider<PowerShareTile> powerShareTileProvider,
-            Provider<AODTile> aodTileProvider) {
+            Provider<AODTile> aodTileProvider)
+            Provider<ScreenRecordTile> screenRecordTileProvider) {
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
         mCellularTileProvider = cellularTileProvider;
@@ -162,6 +165,7 @@ public class QSFactoryImpl implements QSFactory {
         mReadingModeTileProvider = readingModeTileProvider;
         mPowerShareTileProvider = powerShareTileProvider;
         mAODTileProvider = aodTileProvider;
+        mScreenRecordTileProvider = screenRecordTileProvider;
     }
 
     public void setHost(QSTileHost host) {
@@ -238,6 +242,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mPowerShareTileProvider.get();
             case "aod":
                 return mAODTileProvider.get();
+            case "screenrecord":
+                return mScreenRecordTileProvider.get();
         }
 
         // Intent tiles.
