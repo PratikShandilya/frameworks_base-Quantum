@@ -4980,9 +4980,6 @@ public class StatusBar extends SystemUI implements DemoMode, TunerService.Tunabl
             mKeyguardViewMediator.setAodShowing(mDozing);
             mStatusBarWindowManager.setDozing(mDozing);
             mStatusBarKeyguardViewManager.setDozing(mDozing);
-            if (mAmbientIndicationContainer instanceof DozeReceiver) {
-                ((DozeReceiver) mAmbientIndicationContainer).setDozing(mDozing);
-            }
             mEntryManager.updateNotifications();
             updateDozingState();
             updateReportRejectedTouchVisibility();
