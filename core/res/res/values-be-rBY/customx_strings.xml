@@ -21,4 +21,6 @@
     <string name="accessibility_quick_settings_live_display_changed_off">LiveDisplay выключаны.</string>
     <string name="accessibility_quick_settings_live_display_changed_auto">LiveDisplay зменены на аўтаматычны рэжым.</string>
     <string name="accessibility_quick_settings_live_display_changed_day">LiveDisplay зменены на аўтаматычны рэжым.</string>
+    <string name="accessibility_quick_settings_live_display_changed_night">LiveDisplay пераключаны ў начны рэжым.</string>
+    <string name="accessibility_quick_settings_live_display_changed_outdoor">LiveDisplay пераключаны ў вулiчны рэжым.</string>
 </resources>
