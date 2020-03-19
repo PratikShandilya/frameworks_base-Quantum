@@ -25,4 +25,7 @@
     <string name="screenrecord_video_bitrate_summary">Set the video bitrate for better video quality, at the cost of a bigger file.</string>
     <string name="screenrecorder_title_tile">Screenrecord</string>
 
+    <!-- Screenshot toast -->
+    <string name="delete_screenshot_toast">Screenshot deleted</string>
+
 </resources>
