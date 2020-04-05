@@ -178,4 +178,7 @@
   <java-symbol type="string" name="lock_to_app_toast_back_nav_visible" />
   <java-symbol type="string" name="lock_to_app_toast_power_nav_visible" />
 
+  <!-- For Bluetooth service -->
+  <java-symbol type="string" name="bluetooth_airplane_mode_toast" />
+
 </resources>
