@@ -48,6 +48,8 @@ import com.android.systemui.R;
 import com.android.systemui.SysUiServiceProvider;
 import com.android.systemui.plugins.DarkIconDispatcher;
 import com.android.systemui.plugins.DarkIconDispatcher.DarkReceiver;
+import com.android.systemui.screenrecord.RecordingController;
+import com.android.systemui.screenrecord.RecordingController.RecordingStateListener;
 import com.android.systemui.settings.CurrentUserTracker;
 import com.android.systemui.statusbar.CommandQueue;
 import com.android.systemui.statusbar.policy.ConfigurationController.ConfigurationListener;
@@ -65,7 +67,7 @@ import java.util.TimeZone;
  * Digital clock for the status bar.
  */
 public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.Callbacks,
-        DarkReceiver, ConfigurationListener {
+        DarkReceiver, ConfigurationListener, RecordingStateListener {
 
     private static final String TAG = "StatusBarClock";
 
@@ -91,6 +93,9 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
     private SimpleDateFormat mClockFormat;
     private SimpleDateFormat mContentDescriptionFormat;
     private Locale mLocale;
+
+    private RecordingController mRecordingController;
+    private int mRecordCountdownInterval = -1;
 
     private static final int AM_PM_STYLE_NORMAL  = 0;
     private static final int AM_PM_STYLE_SMALL   = 1;
@@ -198,6 +203,9 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
             }
             mCurrentUserTracker.startTracking();
             mCurrentUserId = mCurrentUserTracker.getCurrentUserId();
+
+            mRecordingController = Dependency.get(RecordingController.class);
+            mRecordingController.addCallback(this);
         }
 
         // NOTE: It's safe to do these after registering the receiver since the receiver always runs
@@ -225,6 +233,7 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
                 Dependency.get(DarkIconDispatcher.class).removeDarkReceiver(this);
             }
             mCurrentUserTracker.stopTracking();
+            Dependency.get(RecordingController.class).removeCallback(this);
         }
     }
 
@@ -294,7 +303,8 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
     final void updateClock() {
         if (mDemoMode || mCalendar == null) return;
         mCalendar.setTimeInMillis(System.currentTimeMillis());
-        setText(getSmallTime());
+        int countdownInterval = mRecordCountdownInterval;
+        setText(countdownInterval != -1 ? String.valueOf(countdownInterval) : getSmallTime());
         setContentDescription(mContentDescriptionFormat.format(mCalendar.getTime()));
     }
 
@@ -518,5 +528,27 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
             mSecondsHandler.postAtTime(this, SystemClock.uptimeMillis() / 1000 * 1000 + 1000);
         }
     };
+
+     @Override
+    public void onCountdown(long millisUntilFinished) {
+        mRecordCountdownInterval = (int) Math.floorDiv(millisUntilFinished + 500, 1000);
+        getHandler().post(() -> updateClock());
+    }
+
+    @Override
+    public void onCountdownEnd() {
+        mRecordCountdownInterval = -1;
+        getHandler().post(() -> updateClock());
+    }
+
+    @Override
+    public void onRecordingStart() {
+        // no op
+    }
+
+    @Override
+    public void onRecordingEnd() {
+        // no op
+    }
 }
 
