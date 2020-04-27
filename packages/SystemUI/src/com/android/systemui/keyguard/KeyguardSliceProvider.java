@@ -164,7 +164,7 @@ public class KeyguardSliceProvider extends SliceProvider implements
      * @param builder The slice builder.
      */
     protected void addZenMode(ListBuilder builder) {
-        if (!isDndSuppressingNotifications()) {
+        if (!isDndEnabled()) {
             return;
         }
         RowBuilder dndBuilder = new RowBuilder(builder, mDndUri)
@@ -172,6 +172,13 @@ public class KeyguardSliceProvider extends SliceProvider implements
                         .getString(R.string.accessibility_quick_settings_dnd))
                 .addEndItem(Icon.createWithResource(getContext(), R.drawable.stat_sys_dnd));
         builder.addRow(dndBuilder);
+    }
+
+    /**
+     * Return true if DND is enabled
+     */
+    protected boolean isDndEnabled() {
+        return mZenModeController.getZen() != Settings.Global.ZEN_MODE_OFF;
     }
 
     /**
