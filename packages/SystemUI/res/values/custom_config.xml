@@ -41,4 +41,7 @@
 
     <!-- Show battery icon in the QS Panel instead of in the header -->
     <bool name="config_batteryInQSPanel">false</bool>
+
+    <!-- Allow devices to use a lower screenrecording bitrate because of old hardware -->
+    <bool name="config_device_needs_lower_bitrate">false</bool>
 </resources>
