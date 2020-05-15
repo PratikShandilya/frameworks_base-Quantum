@@ -322,4 +322,7 @@
     <!-- Expected value from fast charging status file  -->
     <string name="config_oemFastChargerStatusValue" translatable="false"></string>
 
+    <!-- Screen pinning exit mode -->
+    <integer name="config_screenPinningExitModePowerKey">1</integer>
+
 </resources>

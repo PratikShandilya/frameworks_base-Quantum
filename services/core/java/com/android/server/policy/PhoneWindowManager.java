@@ -1446,6 +1446,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     private void powerLongPress() {
         int behavior = mResolvedLongPressOnPowerBehavior;
+        if (getScreenPinningExitMode() == 1 && isScreenOn()) {
+            mPowerKeyHandled = true;
+            exitScreenPinningMode();
+            return;
+        }
         switch (behavior) {
             case LONG_PRESS_POWER_NOTHING:
                 break;
@@ -1518,6 +1523,25 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             case LONG_PRESS_BACK_GO_TO_VOICE_ASSIST:
                 launchVoiceAssist(false /* allowDuringSetup */);
                 break;
+        }
+    }
+
+    private int getScreenPinningExitMode() {
+        try {
+            if (!ActivityTaskManager.getService().isInLockTaskMode()) {
+                return -1;
+            }
+        } catch (RemoteException e) {
+            // ignore
+        }
+        return mContext.getResources().getInteger(com.android.internal.R.integer.config_screenPinningExitModePowerKey);
+    }
+
+    private void exitScreenPinningMode() {
+        try {
+            ActivityTaskManager.getService().stopSystemLockTaskMode();
+        } catch (RemoteException e) {
+            // ignore
         }
     }
 
