@@ -222,7 +222,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mBatteryMeterView.setVisibility(mBatteryInQS ? View.GONE : View.VISIBLE);
         mBatteryRemainingIcon.setVisibility(mBatteryInQS ? View.VISIBLE : View.GONE);
 
-        updateSettings();
     }
 
     private void updateStatusText() {
