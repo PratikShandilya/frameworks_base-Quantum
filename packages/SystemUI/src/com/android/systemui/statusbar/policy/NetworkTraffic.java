@@ -99,12 +99,23 @@ public class NetworkTraffic extends TextView {
     protected boolean mTrafficVisible = false;
 
     // Network tracking related variables
-    private final ConnectivityManager mConnectivityManager;
-    private final HashMap<Network, LinkProperties> mLinkPropertiesMap = new HashMap<>();
+    private ConnectivityManager mConnectivityManager;
+    private HashMap<Network, NetworkState> mNetworkMap = new HashMap<>();
 
     // Used to indicate that the set of sources contributing
     // to current stats have changed.
     private boolean mNetworksChanged = true;
+
+    public class NetworkState {
+        public NetworkCapabilities mNetworkCapabilities;
+        public LinkProperties mLinkProperties;
+
+        public NetworkState(NetworkCapabilities networkCapabilities,
+                LinkProperties linkProperties) {
+            mNetworkCapabilities = networkCapabilities;
+            mLinkProperties = linkProperties;
+        }
+    };
 
     private INetworkManagementService mNetworkManagementService;
 
@@ -120,8 +131,8 @@ public class NetworkTraffic extends TextView {
                 long rxBytes = 0;
 
                 // Add interface stats
-                for (LinkProperties linkProperties : mLinkPropertiesMap.values()) {
-                    final String iface = linkProperties.getInterfaceName();
+                for (NetworkState state : mNetworkMap.values()) {
+                    final String iface = state.mLinkProperties.getInterfaceName();
                     if (iface == null) {
                         continue;
                     }
@@ -475,16 +486,37 @@ public class NetworkTraffic extends TextView {
 
     private ConnectivityManager.NetworkCallback mNetworkCallback =
             new ConnectivityManager.NetworkCallback() {
-
         @Override
-        public void onLinkPropertiesChanged(Network network, LinkProperties linkProperties) {
-            mLinkPropertiesMap.put(network, linkProperties);
+        public void onAvailable(Network network) {
+            mNetworkMap.put(network,
+                    new NetworkState(mConnectivityManager.getNetworkCapabilities(network),
+                    mConnectivityManager.getLinkProperties(network)));
             mNetworksChanged = true;
         }
 
         @Override
+        public void onCapabilitiesChanged(Network network,
+                NetworkCapabilities networkCapabilities) {
+            if (mNetworkMap.containsKey(network)) {
+                mNetworkMap.put(network, new NetworkState(networkCapabilities,
+                        mConnectivityManager.getLinkProperties(network)));
+                mNetworksChanged = true;
+            }
+        }
+
+        @Override
+        public void onLinkPropertiesChanged(Network network, LinkProperties linkProperties) {
+            if (mNetworkMap.containsKey(network)) {
+                mNetworkMap.put(network,
+                        new NetworkState(mConnectivityManager.getNetworkCapabilities(network),
+                        linkProperties));
+                mNetworksChanged = true;
+            }
+        }
+
+        @Override
         public void onLost(Network network) {
-            mLinkPropertiesMap.remove(network);
+            mNetworkMap.remove(network);
             mNetworksChanged = true;
         }
     };
