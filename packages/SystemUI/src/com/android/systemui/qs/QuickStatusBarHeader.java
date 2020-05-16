@@ -219,8 +219,8 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 StatusBarIconController.ICON_BLACKLIST);
 
         mBatteryInQS = getResources().getBoolean(R.bool.config_batteryInQSPanel);
-        mBatteryMeterView.setVisibility(mBatteryInQS ? View.GONE : View.VISIBLE);
-        mBatteryRemainingIcon.setVisibility(mBatteryInQS ? View.VISIBLE : View.GONE);
+        //mBatteryMeterView.setVisibility(mBatteryInQS ? View.GONE : View.VISIBLE);
+        //mBatteryRemainingIcon.setVisibility(mBatteryInQS ? View.VISIBLE : View.GONE);
 
     }
 

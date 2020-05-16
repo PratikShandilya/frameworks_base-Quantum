@@ -47,11 +47,11 @@
         android:layout_height="match_parent"
         android:layout_weight="1"/>
 
-    <com.android.systemui.BatteryMeterView
+<!--    <com.android.systemui.BatteryMeterView
         android:id="@+id/batteryRemainingIcon"
         android:layout_height="match_parent"
         android:layout_width="wrap_content"
         android:paddingStart="@dimen/signal_cluster_battery_padding"
-        systemui:textAppearance="@style/TextAppearance.StatusBar.Clock"/>
+        systemui:textAppearance="@style/TextAppearance.StatusBar.Clock"/> -->
 
 </LinearLayout>

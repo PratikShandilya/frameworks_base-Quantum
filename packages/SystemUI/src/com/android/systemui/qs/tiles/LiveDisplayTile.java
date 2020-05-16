@@ -109,7 +109,7 @@ public class LiveDisplayTile extends QSTileImpl<LiveDisplayState> {
 
     @Override
     public boolean isAvailable() {
-        return !ColorDisplayManager.isNightDisplayAvailable(mContext);
+        return true;
     }
 
     @Override
