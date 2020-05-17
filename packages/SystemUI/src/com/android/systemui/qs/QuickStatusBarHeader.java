@@ -129,7 +129,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private View mRingerContainer;
     private Clock mClockView;
     private DateView mDateView;
-    private BatteryMeterView mBatteryRemainingIcon;
+    //private BatteryMeterView mBatteryRemainingIcon;
 
     private boolean mBatteryInQS;
     private BatteryMeterView mBatteryMeterView;
@@ -207,11 +207,11 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mDateView = findViewById(R.id.date);
 
         // Tint for the battery icons are handled in setupHost()
-        mBatteryRemainingIcon = findViewById(R.id.batteryRemainingIcon);
+        //mBatteryRemainingIcon = findViewById(R.id.batteryRemainingIcon);
         // QS will always show the estimate, and BatteryMeterView handles the case where
         // it's unavailable or charging
-        mBatteryRemainingIcon.setPercentShowMode(BatteryMeterView.MODE_ESTIMATE);
-        mBatteryRemainingIcon.setOnClickListener(this);
+        //mBatteryRemainingIcon.setPercentShowMode(BatteryMeterView.MODE_ESTIMATE);
+        //mBatteryRemainingIcon.setOnClickListener(this);
         mRingerModeTextView.setSelected(true);
         mNextAlarmTextView.setSelected(true);
 
@@ -475,7 +475,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             mActivityStarter.postStartActivityDismissingKeyguard(new Intent(
                     Settings.ACTION_SOUND_SETTINGS), 0);
             }
-         else if (v == mBatteryRemainingIcon || v == mBatteryMeterView) {
+         else if (v == mBatteryMeterView) {
             mActivityStarter.postStartActivityDismissingKeyguard(new Intent(
                 Intent.ACTION_POWER_USAGE_SUMMARY), 0);
        }
@@ -518,7 +518,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 android.R.attr.colorForeground);
         float intensity = getColorIntensity(colorForeground);
         int fillColor = mDualToneHandler.getSingleColor(intensity);
-        mBatteryRemainingIcon.onDarkChanged(tintArea, intensity, fillColor);
+        //mBatteryRemainingIcon.onDarkChanged(tintArea, intensity, fillColor);
 
         // Use SystemUI context to get battery meter colors, and let it use the default tint (white)
         mBatteryMeterView.setColorsFromContext(mHost.getContext());
