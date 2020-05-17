@@ -5543,6 +5543,11 @@ public final class Settings {
         /** @hide */
         private static final Validator LOCKSCREEN_TRANSLUCENT_NOTIFICATIONS_BG_ENABLED_VALIDATOR =
                 BOOLEAN_VALIDATOR;
+        /**
+         * Screenrecord: audio source
+         * @hide
+         */
+        public static final String SCREENRECORD_AUDIO_SOURCE = "screenrecord_audio_source";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
