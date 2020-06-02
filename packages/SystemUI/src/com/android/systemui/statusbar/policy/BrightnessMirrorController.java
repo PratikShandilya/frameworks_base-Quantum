@@ -33,8 +33,6 @@ import com.android.systemui.statusbar.phone.NotificationPanelView;
 import com.android.systemui.statusbar.phone.StatusBarWindowView;
 import com.android.systemui.tuner.TunerService;
 
-import lineageos.providers.LineageSettings;
-
 import java.util.function.Consumer;
 
 /**
@@ -44,7 +42,7 @@ public class BrightnessMirrorController
         implements CallbackController<BrightnessMirrorController.BrightnessMirrorListener> {
 
     private static final String QS_SHOW_AUTO_BRIGHTNESS =
-            "lineagesecure:" + LineageSettings.Secure.QS_SHOW_AUTO_BRIGHTNESS;
+            "system:" + Settings.System.QS_SHOW_AUTO_BRIGHTNESS;
 
     private final StatusBarWindowView mStatusBarWindow;
     private final Consumer<Boolean> mVisibilityCallback;
