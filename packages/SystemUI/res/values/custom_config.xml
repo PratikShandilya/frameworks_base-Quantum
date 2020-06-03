@@ -39,10 +39,6 @@
     <!-- Asus stitch editor component name -->
     <string name="config_stitchEditor">com.asus.stitchimage/com.asus.stitchimage.editor.ScreenshotEditorActivity</string>
 
-    <!-- Whether to disable assist hint on lockscreen -->
-    <bool name="config_disableAssistHintOnLockscreen">false</bool>
-
     <!-- Show battery icon in the QS Panel instead of in the header -->
     <bool name="config_batteryInQSPanel">false</bool>
-
 </resources>
