@@ -1395,19 +1395,19 @@
     <!-- Screen pinning dialog title. -->
     <string name="screen_pinning_title">Screen is pinned</string>
     <!-- Screen pinning dialog description. -->
-    <string name="screen_pinning_description">This keeps it in view until you unpin. Touch &amp; hold Back and Overview or long press Power button to unpin.</string>
-    <string name="screen_pinning_description_recents_invisible">This keeps it in view until you unpin. Touch &amp; hold Back and Home or long press Power button to unpin.</string>
-    <string name="screen_pinning_description_gestural">This keeps it in view until you unpin. Swipe up &amp; hold or long press Power button to unpin.</string>
+    <string name="screen_pinning_description">This keeps it in view until you unpin. Touch &amp; hold Back and Overview to unpin.</string>
+    <string name="screen_pinning_description_recents_invisible">This keeps it in view until you unpin. Touch &amp; hold Back and Home to unpin.</string>
+    <string name="screen_pinning_description_gestural">This keeps it in view until you unpin. Swipe up &amp; hold to unpin.</string>
     <!-- Screen pinning dialog description. -->
-    <string name="screen_pinning_description_accessible">This keeps it in view until you unpin. Touch &amp; hold Overview or long press Power button to unpin.</string>
-    <string name="screen_pinning_description_recents_invisible_accessible">This keeps it in view until you unpin. Touch &amp; hold Home or long press Power button to unpin.</string>
+    <string name="screen_pinning_description_accessible">This keeps it in view until you unpin. Touch &amp; hold Overview to unpin.</string>
+    <string name="screen_pinning_description_recents_invisible_accessible">This keeps it in view until you unpin. Touch &amp; hold Home to unpin.</string>
     <!-- Notify use that they are in Lock-to-app -->
     <string name="screen_pinning_toast">To unpin this screen, touch &amp; hold Back and Overview
-        buttons or long press Power button</string>
+        buttons</string>
     <string name="screen_pinning_toast_recents_invisible">To unpin this screen, touch &amp; hold Back
-        and Home buttons or long press Power button</string>
+        and Home buttons</string>
     <!-- Notify (in toast) user how to unpin screen in gesture navigation mode [CHAR LIMIT=NONE] -->
-    <string name="screen_pinning_toast_gesture_nav">To unpin this screen, swipe up &amp; hold or long press Power button</string>
+    <string name="screen_pinning_toast_gesture_nav">To unpin this screen, swipe up &amp; hold</string>
     <!-- Screen pinning positive response. -->
     <string name="screen_pinning_positive">Got it</string>
     <!-- Screen pinning negative response. -->
