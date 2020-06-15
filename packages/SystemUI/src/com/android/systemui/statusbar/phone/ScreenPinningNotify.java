@@ -28,8 +28,6 @@ import android.widget.Toast;
 import com.android.systemui.R;
 import com.android.systemui.SysUIToast;
 
-import com.android.internal.util.custom.NavbarUtils;
-
 /**
  *  Helper to manage showing/hiding a image to notify them that they are entering or exiting screen
  *  pinning mode. All exposed methods should be called from a handler thread.
@@ -68,11 +66,9 @@ public class ScreenPinningNotify {
         if (mLastToast != null) {
             mLastToast.cancel();
         }
-        int noNavbarResId = supportsGesturesOnFP() ? 
-                R.string.screen_pinning_toast_no_navbar_fpsensor :
-                R.string.screen_pinning_toast_no_navbar;
         mLastToast = makeAllUserToastAndShow(!hasNavigationBar()
-                ? noNavbarResId : (isGestureNavEnabled
+                ? R.string.screen_pinning_toast_no_navbar
+                : (isGestureNavEnabled
                 ? R.string.screen_pinning_toast_gesture_nav
                 : isRecentsButtonVisible
                         ? R.string.screen_pinning_toast
@@ -88,15 +84,10 @@ public class ScreenPinningNotify {
 
     private boolean hasNavigationBar() {
         try {
-            return mWindowManagerService.hasNavigationBar(mContext.getDisplayId()) && NavbarUtils.isEnabled(mContext);
+            return mWindowManagerService.hasNavigationBar(mContext.getDisplayId());
         } catch (RemoteException e) {
             // ignore
         }
         return false;
      }
-
-    private boolean supportsGesturesOnFP() {
-        return mContext.getResources().getBoolean(com.android.internal.R.bool.config_supportsGesturesOnFingerprintSensor);
-    }
-
 }
