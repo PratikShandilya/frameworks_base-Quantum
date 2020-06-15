@@ -1710,9 +1710,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     Runnable mBackLongPress = new Runnable() {
         public void run() {
-            if (unpinActivity(false)) {
-                return;
-            }
             if (ActionUtils.killForegroundApp(mContext, mCurrentUserId)) {
                 performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, false,
                         "Back - Long Press");
@@ -3551,11 +3548,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 launchAssistAction(Intent.EXTRA_ASSIST_INPUT_HINT_KEYBOARD, event.getDeviceId());
             }
             return -1;
+
         } else if (keyCode == KeyEvent.KEYCODE_BACK) {
-            boolean shouldUnpin = unpinActivity(true);
-            if (mKillAppLongpressBack || shouldUnpin) {
+            if (mKillAppLongpressBack) {
                 if (down && repeatCount == 0) {
-                    mHandler.postDelayed(mBackLongPress, shouldUnpin ? 2000 : mBackKillTimeout);
+                    mHandler.postDelayed(mBackLongPress, mBackKillTimeout);
                 }
             }
         }
@@ -3791,22 +3788,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
             } catch (Exception e) {
                 Slog.w(TAG, "Could not dispatch event to device key handler", e);
-            }
-        }
-        return false;
-    }
-
-    private boolean unpinActivity(boolean checkOnly) {
-        if (!hasNavigationBar()) {
-            try {
-                if (ActivityTaskManager.getService().isInLockTaskMode()) {
-                    if (!checkOnly) {
-                        ActivityTaskManager.getService().stopSystemLockTaskMode();
-                    }
-                    return true;
-                }
-            } catch (RemoteException e) {
-                // ignore
             }
         }
         return false;
