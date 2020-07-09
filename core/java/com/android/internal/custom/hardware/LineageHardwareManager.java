@@ -42,10 +42,6 @@ import vendor.lineage.livedisplay.V2_0.IDisplayModes;
 import vendor.lineage.livedisplay.V2_0.IPictureAdjustment;
 import vendor.lineage.livedisplay.V2_0.IReadingEnhancement;
 import vendor.lineage.livedisplay.V2_0.ISunlightEnhancement;
-import vendor.lineage.touch.V1_0.IGloveMode;
-import vendor.lineage.touch.V1_0.IKeyDisabler;
-import vendor.lineage.touch.V1_0.IStylusMode;
-import vendor.lineage.touch.V1_0.ITouchscreenGesture;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.IllegalArgumentException;
@@ -73,88 +69,61 @@ public final class LineageHardwareManager {
     // the support library is properly handled in the platform, we should change this.
 
     /**
-     * High touch sensitivity for touch panels
-     */
-    @VisibleForTesting
-    public static final int FEATURE_HIGH_TOUCH_SENSITIVITY = 0x1;
-
-    /**
-     * Hardware navigation key disablement
-     */
-    @VisibleForTesting
-    public static final int FEATURE_KEY_DISABLE = 0x2;
-
-    /**
-     * Touchscreen hovering
-     */
-    @VisibleForTesting
-    public static final int FEATURE_TOUCH_HOVERING = 0x4;
-
-    /**
-     * Touchscreen gesture
-     */
-    @VisibleForTesting
-    public static final int FEATURE_TOUCHSCREEN_GESTURES = 0x10;
-
-    /**
      * Adaptive backlight support (this refers to technologies like NVIDIA SmartDimmer,
      * QCOM CABL or Samsung CABC)
      */
     @VisibleForTesting
-    public static final int FEATURE_ADAPTIVE_BACKLIGHT = 0x20;
+    public static final int FEATURE_ADAPTIVE_BACKLIGHT = 0x1;
 
     /**
      * Color enhancement support
      */
     @VisibleForTesting
-    public static final int FEATURE_COLOR_ENHANCEMENT = 0x100;
+    public static final int FEATURE_COLOR_ENHANCEMENT = 0x2;
 
     /**
      * Display RGB color calibration
      */
     @VisibleForTesting
-    public static final int FEATURE_DISPLAY_COLOR_CALIBRATION = 0x400;
+    public static final int FEATURE_DISPLAY_COLOR_CALIBRATION = 0x4;
 
     /**
      * Increased display readability in bright light
      */
     @VisibleForTesting
-    public static final int FEATURE_SUNLIGHT_ENHANCEMENT = 0x800;
+    public static final int FEATURE_SUNLIGHT_ENHANCEMENT = 0x10;
 
     /**
      * Auto contrast
      */
     @VisibleForTesting
-    public static final int FEATURE_AUTO_CONTRAST = 0x1000;
+    public static final int FEATURE_AUTO_CONTRAST = 0x20;
 
     /**
      * Display modes
      */
     @VisibleForTesting
-    public static final int FEATURE_DISPLAY_MODES = 0x2000;
+    public static final int FEATURE_DISPLAY_MODES = 0x100;
 
     /**
      * Reading mode
      */
     @VisibleForTesting
-    public static final int FEATURE_READING_ENHANCEMENT = 0x4000;
+    public static final int FEATURE_READING_ENHANCEMENT = 0x400;
 
     /**
      * Color balance
      */
     @VisibleForTesting
-    public static final int FEATURE_COLOR_BALANCE = 0x20000;
+    public static final int FEATURE_COLOR_BALANCE = 0x800;
 
     /**
      * HSIC picture adjustment
      */
     @VisibleForTesting
-    public static final int FEATURE_PICTURE_ADJUSTMENT = 0x40000;
+    public static final int FEATURE_PICTURE_ADJUSTMENT = 0x1000;
 
     private static final List<Integer> BOOLEAN_FEATURES = Arrays.asList(
-        FEATURE_HIGH_TOUCH_SENSITIVITY,
-        FEATURE_KEY_DISABLE,
-        FEATURE_TOUCH_HOVERING,
         FEATURE_ADAPTIVE_BACKLIGHT,
         FEATURE_AUTO_CONTRAST,
         FEATURE_COLOR_ENHANCEMENT,
@@ -261,14 +230,6 @@ public final class LineageHardwareManager {
     private IBase getHIDLService(int feature) {
         try {
             switch (feature) {
-                case FEATURE_HIGH_TOUCH_SENSITIVITY:
-                    return IGloveMode.getService(true);
-                case FEATURE_KEY_DISABLE:
-                    return IKeyDisabler.getService(true);
-                case FEATURE_TOUCH_HOVERING:
-                    return IStylusMode.getService(true);
-                case FEATURE_TOUCHSCREEN_GESTURES:
-                    return ITouchscreenGesture.getService(true);
                 case FEATURE_ADAPTIVE_BACKLIGHT:
                     return IAdaptiveBacklight.getService(true);
                 case FEATURE_AUTO_CONTRAST:
@@ -331,15 +292,6 @@ public final class LineageHardwareManager {
             if (isSupportedHIDL(feature)) {
                 IBase obj = mHIDLMap.get(feature);
                 switch (feature) {
-                    case FEATURE_HIGH_TOUCH_SENSITIVITY:
-                        IGloveMode gloveMode = (IGloveMode) obj;
-                        return gloveMode.isEnabled();
-                    case FEATURE_KEY_DISABLE:
-                        IKeyDisabler keyDisabler = (IKeyDisabler) obj;
-                        return keyDisabler.isEnabled();
-                    case FEATURE_TOUCH_HOVERING:
-                        IStylusMode stylusMode = (IStylusMode) obj;
-                        return stylusMode.isEnabled();
                     case FEATURE_ADAPTIVE_BACKLIGHT:
                         IAdaptiveBacklight adaptiveBacklight = (IAdaptiveBacklight) obj;
                         return adaptiveBacklight.isEnabled();
@@ -383,15 +335,6 @@ public final class LineageHardwareManager {
             if (isSupportedHIDL(feature)) {
                 IBase obj = mHIDLMap.get(feature);
                 switch (feature) {
-                    case FEATURE_HIGH_TOUCH_SENSITIVITY:
-                        IGloveMode gloveMode = (IGloveMode) obj;
-                        return gloveMode.setEnabled(enable);
-                    case FEATURE_KEY_DISABLE:
-                        IKeyDisabler keyDisabler = (IKeyDisabler) obj;
-                        return keyDisabler.setEnabled(enable);
-                    case FEATURE_TOUCH_HOVERING:
-                        IStylusMode stylusMode = (IStylusMode) obj;
-                        return stylusMode.setEnabled(enable);
                     case FEATURE_ADAPTIVE_BACKLIGHT:
                         IAdaptiveBacklight adaptiveBacklight = (IAdaptiveBacklight) obj;
                         return adaptiveBacklight.setEnabled(enable);
@@ -799,38 +742,6 @@ public final class LineageHardwareManager {
         } catch (RemoteException e) {
         }
         return null;
-    }
-
-    /**
-     * @return a list of available touchscreen gestures on the devices
-     */
-    public TouchscreenGesture[] getTouchscreenGestures() {
-        try {
-            if (isSupportedHIDL(FEATURE_TOUCHSCREEN_GESTURES)) {
-                ITouchscreenGesture touchscreenGesture = (ITouchscreenGesture)
-                        mHIDLMap.get(FEATURE_TOUCHSCREEN_GESTURES);
-                return HIDLHelper.fromHIDLGestures(touchscreenGesture.getSupportedGestures());
-            }
-        } catch (RemoteException e) {
-        }
-        return null;
-    }
-
-    /**
-     * @return true if setting the activation status was successful
-     */
-    public boolean setTouchscreenGestureEnabled(
-            TouchscreenGesture gesture, boolean state) {
-        try {
-            if (isSupportedHIDL(FEATURE_TOUCHSCREEN_GESTURES)) {
-                ITouchscreenGesture touchscreenGesture = (ITouchscreenGesture)
-                        mHIDLMap.get(FEATURE_TOUCHSCREEN_GESTURES);
-                return touchscreenGesture.setGestureEnabled(
-                        HIDLHelper.toHIDLGesture(gesture), state);
-            }
-        } catch (RemoteException e) {
-        }
-        return false;
     }
 
     /**
