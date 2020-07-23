@@ -48,7 +48,6 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="?android:attr/textColorPrimary"
                 android:textStyle="bold"
-                android:fontFamily="@*android:string/config_headlineFontFamily"
                 android:text="@string/screenrecord_dialog_title" />
 
             <TextView
@@ -61,7 +60,6 @@
                 android:gravity="start"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="?android:attr/textColorSecondary"
-                android:fontFamily="@*android:string/config_bodyFontFamily"
                 android:text="@string/screenrecord_dialog_summary" />
 
             <!-- Force low quality -->
@@ -86,7 +84,6 @@
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textStyle="bold"
                         android:textColor="?android:attr/textColorSecondary"
-                        android:fontFamily="@*android:string/config_headlineFontFamily"
                         android:text="@string/screenrecord_video_bitrate_title" />
 
                     <TextView
@@ -98,7 +95,6 @@
                         android:layout_marginEnd="90dp"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="?android:attr/textColorSecondary"
-                        android:fontFamily="@*android:string/config_bodyFontFamily"
                         android:text="@string/screenrecord_video_bitrate_summary" />
 
                 </RelativeLayout>
@@ -115,7 +111,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
                     android:entries="@array/screen_video_quality_entries"
-                    android:fontFamily="@*android:string/config_bodyFontFamily"
                     android:layout_gravity="top|end" />
 
             </FrameLayout>
@@ -141,7 +136,6 @@
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textStyle="bold"
                         android:textColor="?android:attr/textColorSecondary"
-                        android:fontFamily="@*android:string/config_headlineFontFamily"
                         android:text="@string/screenrecord_audio_title" />
 
                     <TextView
@@ -153,7 +147,6 @@
                         android:layout_marginEnd="90dp"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="?android:attr/textColorSecondary"
-                        android:fontFamily="@*android:string/config_bodyFontFamily"
                         android:text="@string/screenrecord_audio_summary" />
 
                 </RelativeLayout>
@@ -169,8 +162,7 @@
                     android:id="@+id/spinner_audio_source"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
-                    android:layout_gravity="top|end"
-                    android:fontFamily="@*android:string/config_bodyFontFamily" />
+                    android:layout_gravity="top|end" />
 
             </FrameLayout>
             <!-- Show taps in screen -->
@@ -195,7 +187,6 @@
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textStyle="bold"
                         android:textColor="?android:attr/textColorSecondary"
-                        android:fontFamily="@*android:string/config_headlineFontFamily"
                         android:text="@string/screenrecord_taps_title" />
 
                     <TextView
@@ -207,7 +198,6 @@
                         android:layout_marginEnd="90dp"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="?android:attr/textColorSecondary"
-                        android:fontFamily="@*android:string/config_bodyFontFamily"
                         android:text="@string/screenrecord_taps_summary" />
 
                 </RelativeLayout>
@@ -248,7 +238,6 @@
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textStyle="bold"
                         android:textColor="?android:attr/textColorSecondary"
-                        android:fontFamily="@*android:string/config_headlineFontFamily"
                         android:text="@string/screenrecord_stopdot_title" />
 
                     <TextView
@@ -260,7 +249,6 @@
                         android:layout_marginEnd="90dp"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="?android:attr/textColorSecondary"
-                        android:fontFamily="@*android:string/config_bodyFontFamily"
                         android:text="@string/screenrecord_stopdot_summary" />
 
                 </RelativeLayout>
@@ -298,7 +286,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/screenrecord_dialog_cancel"
-                    android:fontFamily="@*android:string/config_headlineFontFamily"
                     android:textAllCaps="false"
                     style="@*android:style/Widget.DeviceDefault.Button.Borderless.Colored" />
 
@@ -310,7 +297,6 @@
                     android:backgroundTint="?android:attr/colorAccent"
                     android:textColor="?android:textColorPrimaryInverse"
                     android:text="@string/screenrecord_dialog_start"
-                    android:fontFamily="@*android:string/config_headlineFontFamily"
                     android:textAllCaps="false" />
 
             </RelativeLayout>
