@@ -127,7 +127,10 @@
     <!-- Expected value from fast charging status file -->
     <java-symbol type="string" name="config_oemFastChargerStatusValue" />
 
-  <!-- Screen pinning exit mode -->
-  <java-symbol type="integer" name="config_screenPinningExitModePowerKey" />
+    <!-- Screen pinning exit mode -->
+    <java-symbol type="integer" name="config_screenPinningExitModePowerKey" />
 
+    <!-- Light / Regular style fonts -->
+    <java-symbol type="string" name="config_lightFontFamily" />
+    <java-symbol type="string" name="config_regularFontFamily" />
 </resources>
