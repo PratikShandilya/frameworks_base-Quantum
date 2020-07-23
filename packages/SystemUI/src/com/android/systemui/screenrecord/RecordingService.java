@@ -428,15 +428,13 @@ public class RecordingService extends Service {
         if (mDotShowing) {
             stopDot();
         }
-        try {
-            mMediaRecorder.stop();
-            mMediaRecorder.release();
-            mMediaRecorder = null;
-            mMediaProjection.stop();
-            mMediaProjection = null;
-            mInputSurface.release();
-            mVirtualDisplay.release();
-        } catch (Exception e) {}
+        mMediaRecorder.stop();
+        mMediaRecorder.release();
+        mMediaRecorder = null;
+        mMediaProjection.stop();
+        mMediaProjection = null;
+        mInputSurface.release();
+        mVirtualDisplay.release();
         stopSelf();
     }
 
