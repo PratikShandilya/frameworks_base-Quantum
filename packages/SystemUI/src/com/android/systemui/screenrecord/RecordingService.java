@@ -229,12 +229,9 @@ public class RecordingService extends Service {
      */
     private void startRecording() {
         try {
-            try {
-                mTempFile = File.createTempFile("temp", ".mp4");
-                Log.d(TAG, "Writing video output to: " + mTempFile.getAbsolutePath());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            mTempFile = File.createTempFile("temp", ".mp4");
+            Log.d(TAG, "Writing video output to: " + mTempFile.getAbsolutePath());
+
             setTapsVisible(mShowTaps);
 
             // Set up media recorder
@@ -407,7 +404,7 @@ public class RecordingService extends Service {
     }
 
     private void saveRecording(NotificationManager notificationManager) {
-        String fileName = new SimpleDateFormat("'ScreenRecord-'yyyyMMdd-HHmmss'.mp4'")
+        String fileName = new SimpleDateFormat("'screen-'yyyyMMdd-HHmmss'.mp4'")
                 .format(new Date());
 
         ContentValues values = new ContentValues();
