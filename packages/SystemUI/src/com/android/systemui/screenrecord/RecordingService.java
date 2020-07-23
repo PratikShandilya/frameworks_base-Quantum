@@ -879,11 +879,7 @@ public class RecordingService extends Service {
                 synchronized (mMuxerLock) {
                     if (mMuxer != null) {
                         if (mMuxerStarted) {
-                            try {
-                                mMuxer.stop();
-                            } catch (IllegalStateException e) {
-                                // do nothing
-                            }
+                            mMuxer.stop();
                         }
                         mMuxer.release();
                         mMuxer = null;
