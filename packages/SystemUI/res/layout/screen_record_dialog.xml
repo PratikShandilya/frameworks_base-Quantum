@@ -115,6 +115,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
                     android:entries="@array/screen_video_quality_entries"
+                    android:fontFamily="@*android:string/config_bodyFontFamily"
                     android:layout_gravity="top|end" />
 
             </FrameLayout>
@@ -168,7 +169,8 @@
                     android:id="@+id/spinner_audio_source"
                     android:layout_width="wrap_content"
                     android:layout_height="48dp"
-                    android:layout_gravity="top|end" />
+                    android:layout_gravity="top|end"
+                    android:fontFamily="@*android:string/config_bodyFontFamily" />
 
             </FrameLayout>
             <!-- Show taps in screen -->
@@ -296,7 +298,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/screenrecord_dialog_cancel"
-                    android:textStyle="bold"
                     android:fontFamily="@*android:string/config_headlineFontFamily"
                     android:textAllCaps="false"
                     style="@*android:style/Widget.DeviceDefault.Button.Borderless.Colored" />
@@ -309,7 +310,6 @@
                     android:backgroundTint="?android:attr/colorAccent"
                     android:textColor="?android:textColorPrimaryInverse"
                     android:text="@string/screenrecord_dialog_start"
-                    android:textStyle="bold"
                     android:fontFamily="@*android:string/config_headlineFontFamily"
                     android:textAllCaps="false" />
 
