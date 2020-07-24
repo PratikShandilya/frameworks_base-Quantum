@@ -22,6 +22,7 @@
     <string name="screenrecord_audio_recording_off">Disabled</string>
     <string name="screenrecord_ongoing_screen_and_audio">Recording screen and audio</string>
     <string name="screenrecord_ongoing_screen_only">Recording screen</string>
+    <string name="screenrecord_ongoing_stop_message">Tap to stop</string>
     <string name="screenrecord_start">Start</string>
     <string name="screenrecord_start_label">Start Recording?</string>
     <string name="screenrecord_taps_label">Show touches on screen</string>
