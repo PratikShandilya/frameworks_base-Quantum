@@ -4445,7 +4445,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 && mGlobalKeyManager.shouldHandleGlobalKey(keyCode, event)) {
             if (isWakeKey) {
                 wakeUp(event.getEventTime(), mAllowTheaterModeWakeFromKey,
-                        PowerManager.WAKE_REASON_WAKE_KEY, "android.policy:KEY", true);
+                        PowerManager.WAKE_REASON_WAKE_KEY, "android.policy:KEY");
             }
             return result;
         }
@@ -4920,8 +4920,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
         if (isWakeKey) {
             wakeUp(event.getEventTime(), mAllowTheaterModeWakeFromKey,
-                    PowerManager.WAKE_REASON_WAKE_KEY, "android.policy:KEY",
-                    event.getKeyCode() == KeyEvent.KEYCODE_WAKEUP);
+                    PowerManager.WAKE_REASON_WAKE_KEY, "android.policy:KEY");
         }
 
         return result;
@@ -5408,11 +5407,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     private boolean wakeUp(long wakeTime, boolean wakeInTheaterMode, @WakeReason int reason,
             String details) {
-        return wakeUp(wakeTime, wakeInTheaterMode, reason, details, false);
-    }
-
-    private boolean wakeUp(long wakeTime, boolean wakeInTheaterMode, @WakeReason int reason,
-            String details, final boolean withProximityCheck) {
         final boolean theaterModeEnabled = isTheaterModeEnabled();
         if (!wakeInTheaterMode && theaterModeEnabled) {
             return false;
@@ -5423,11 +5417,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     Settings.Global.THEATER_MODE_ON, 0);
         }
 
-        if (withProximityCheck) {
-            mPowerManager.wakeUpWithProximityCheck(wakeTime, reason, details);
-        } else {
-            mPowerManager.wakeUp(wakeTime, reason, details);
-        }
+        mPowerManager.wakeUp(wakeTime, reason, details);
         return true;
     }
 
