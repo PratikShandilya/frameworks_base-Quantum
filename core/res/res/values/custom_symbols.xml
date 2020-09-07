@@ -130,4 +130,7 @@
   <!-- Screen pinning exit mode -->
   <java-symbol type="integer" name="config_screenPinningExitModePowerKey" />
 
+    <!-- Enable face auth only when swiping security view -->
+    <java-symbol type="bool" name="config_faceAuthOnlyOnSecurityView" />
+
 </resources>
