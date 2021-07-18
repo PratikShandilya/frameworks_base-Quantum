@@ -2645,8 +2645,6 @@ public final class PowerManagerService extends SystemService
             if (DEBUG_SPEW) {
                 Slog.d(TAG, "updateDisplayPowerStateLocked: mDisplayReady=" + mDisplayReady
                         + ", policy=" + mDisplayPowerRequest.policy
-                        + ", useProximitySensor " + mDisplayPowerRequest.useProximitySensor
-                        + ", mProximityPositive " + mProximityPositive
                         + ", mWakefulness=" + mWakefulness
                         + ", mWakeLockSummary=0x" + Integer.toHexString(mWakeLockSummary)
                         + ", mUserActivitySummary=0x" + Integer.toHexString(mUserActivitySummary)
@@ -2847,10 +2845,8 @@ public final class PowerManagerService extends SystemService
             // until the display is actually ready so that all transitions have
             // completed.  This is probably a good sign that things have gotten
             // too tangled over here...
-            // Also set interactive state according to proximity sensor.
             if (interactive || mDisplayReady) {
-                setHalInteractiveModeLocked(interactive &&
-                    (!mDisplayPowerRequest.useProximitySensor || !mProximityPositive));
+                setHalInteractiveModeLocked(interactive);
             }
         }
 
