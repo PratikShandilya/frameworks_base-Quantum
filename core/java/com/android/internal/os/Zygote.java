@@ -645,8 +645,6 @@ public final class Zygote {
 
             disableExecuteOnly(args.mTargetSdkVersion);
 
-            Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
-
             return ZygoteInit.zygoteInit(args.mTargetSdkVersion,
                     args.mRemainingArgs,
                     null /* classLoader */);
