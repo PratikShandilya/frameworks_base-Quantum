@@ -580,7 +580,9 @@ class ZygoteConnection {
             }
         }
 
-        Zygote.setAppProcessName(parsedArgs, TAG);
+        if (parsedArgs.mNiceName != null) {
+            Process.setArgV0(parsedArgs.mNiceName);
+        }
 
         // End of the postFork event.
         Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
