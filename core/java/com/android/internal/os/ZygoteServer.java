@@ -184,8 +184,9 @@ class ZygoteServer {
                             Zygote.USAP_POOL_SECONDARY_SOCKET_NAME);
         }
 
-        mUsapPoolSupported = true;
         fetchUsapPoolPolicyProps();
+
+        mUsapPoolSupported = true;
     }
 
     void setForkChild() {
