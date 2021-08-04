@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2020 Paranoid Android
+ * Copyright (C) 2021 QUANTUM
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,8 +38,11 @@ import org.xmlpull.v1.XmlPullParserException;
 public class ScreenRecordDrawable extends DrawableWrapper {
 
     private Drawable mFillDrawable;
+    private Drawable mIconDrawable;
     private int mHorizontalPadding;
-    private float mIconRadius;
+    private int mIconRadius;
+    private int mWidthPx;
+    private int mHeightPx;
     private int mLevel;
     private Paint mPaint;
     private float mTextSize;
@@ -54,15 +58,29 @@ public class ScreenRecordDrawable extends DrawableWrapper {
         super.inflate(r, parser, attrs, theme);
         setDrawable(r.getDrawable(R.drawable.ic_screen_record_background, theme).mutate());
         mFillDrawable = r.getDrawable(R.drawable.ic_screen_record_background, theme).mutate();
+        mIconDrawable = r.getDrawable(R.drawable.ic_screenrecord, theme).mutate();
         mHorizontalPadding = r.getDimensionPixelSize(R.dimen.status_bar_horizontal_padding);
         mTextSize = (float) r.getDimensionPixelSize(R.dimen.screenrecord_status_text_size);
-        mIconRadius = (float) r.getDimensionPixelSize(R.dimen.screenrecord_status_icon_radius);
+        mIconRadius = r.getDimensionPixelSize(R.dimen.screenrecord_status_icon_radius);
         mLevel = attrs.getAttributeIntValue((String) null, "level", 0);
         mPaint = new Paint();
         mPaint.setTextAlign(Paint.Align.CENTER);
         mPaint.setColor(-1);
         mPaint.setTextSize(mTextSize);
         mPaint.setFakeBoldText(true);
+
+        mWidthPx = r.getDimensionPixelSize(R.dimen.screenrecord_status_icon_width);
+        mHeightPx = r.getDimensionPixelSize(R.dimen.screenrecord_status_icon_height);
+    }
+
+    @Override
+    public int getIntrinsicWidth() {
+        return mWidthPx;
+    }
+
+    @Override
+    public int getIntrinsicHeight() {
+        return mHeightPx;
     }
 
     @Override
@@ -97,19 +115,21 @@ public class ScreenRecordDrawable extends DrawableWrapper {
             String valueOf = String.valueOf(mLevel);
             Rect rect = new Rect();
             mPaint.getTextBounds(valueOf, 0, valueOf.length(), rect);
-            canvas.drawText(valueOf, (float) bounds.centerX(), ((float) bounds.centerY()) + ((float) (rect.height() / 4)), mPaint);
-            return;
+            canvas.drawText(valueOf, bounds.centerX(), bounds.centerY() + rect.height() / 2, mPaint);
+        } else {
+            Rect iconBounds = new Rect(bounds.centerX() - mIconRadius,
+                    bounds.centerY() - mIconRadius,
+                    bounds.centerX() + mIconRadius,
+                    bounds.centerY() + mIconRadius);
+            mIconDrawable.setBounds(iconBounds);
+            mIconDrawable.draw(canvas);
         }
-        canvas.drawCircle((float) bounds.centerX(), ((float) bounds.centerY()) - (mIconRadius / 2.0f), mIconRadius, mPaint);
     }
 
     @Override
     public boolean getPadding(Rect padding) {
         padding.left = padding.left + mHorizontalPadding;
         padding.right += mHorizontalPadding;
-        padding.top = 0;
-        padding.bottom = 0;
-        Log.d("ScreenRecordDrawable", "set zero top/bottom pad");
         return true;
     }
 

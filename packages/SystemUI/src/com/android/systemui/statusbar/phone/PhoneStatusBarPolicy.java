@@ -655,6 +655,7 @@ public class PhoneStatusBarPolicy
         if (DEBUG) Log.d(TAG, "screenrecord: countdown " + millisUntilFinished);
         int level = (int) Math.floorDiv(millisUntilFinished + 500, 1000);
         int icon = R.drawable.stat_sys_screen_record;
+        String description = Integer.toString(level);
         if (level == 1) {
             icon = R.drawable.stat_sys_screen_record_1;
         } else if (level == 2) {
@@ -662,7 +663,7 @@ public class PhoneStatusBarPolicy
         } else if (level == 3) {
             icon = R.drawable.stat_sys_screen_record_3;
         }
-        mIconController.setIcon(mSlotScreenRecord, icon, (CharSequence) null);
+        mIconController.setIcon(mSlotScreenRecord, icon, description);
         mIconController.setIconVisibility(mSlotScreenRecord, true);
     }
 
@@ -677,7 +678,9 @@ public class PhoneStatusBarPolicy
     @Override
     public void onRecordingStart() {
         if (DEBUG) Log.d(TAG, "screenrecord: showing icon");
-        mIconController.setIcon(mSlotScreenRecord, R.drawable.stat_sys_screen_record, (CharSequence) null);
+        mIconController.setIcon(mSlotScreenRecord,
+	R.drawable.stat_sys_screen_record,
+	mContext.getString(R.string.screenrecord_ongoing_screen_only));
         mIconController.setIconVisibility(mSlotScreenRecord, true);
     }
 

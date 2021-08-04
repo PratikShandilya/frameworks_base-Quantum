@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2020 Paranoid Android
+ * Copyright (C) 2021 QUANTUM
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -80,17 +81,13 @@ public class ScreenRecordTile extends QSTileImpl<QSTile.BooleanState> {
         boolean isRecording = mController.isRecording();
         state.value = isRecording || isStarting;
         state.state = (isRecording || isStarting) ? Tile.STATE_ACTIVE  : Tile.STATE_INACTIVE;
+        state.label = mContext.getString(R.string.quick_settings_screen_record_label);
+        state.icon = QSTileImpl.ResourceIcon.get(R.drawable.ic_screenrecord);
         if (isRecording) {
-            state.icon = QSTileImpl.ResourceIcon.get(R.drawable.ic_qs_screenrecord);
-            state.label = mContext.getString(R.string.quick_settings_screen_record_label);
             state.secondaryLabel = mContext.getString(R.string.quick_settings_screen_record_stop);
         } else if (isStarting) {
-            state.icon = QSTileImpl.ResourceIcon.get(R.drawable.ic_qs_screenrecord);
-            state.label = mContext.getString(R.string.quick_settings_screen_record_label);
             state.secondaryLabel = String.format("%d...", new Object[]{Integer.valueOf((int) Math.floorDiv(mMillisUntilFinished + 500, 1000))});
         } else {
-            state.icon = QSTileImpl.ResourceIcon.get(R.drawable.ic_qs_screenrecord);
-            state.label = mContext.getString(R.string.quick_settings_screen_record_label);
             state.secondaryLabel = mContext.getString(R.string.quick_settings_screen_record_start);
         }
     }
