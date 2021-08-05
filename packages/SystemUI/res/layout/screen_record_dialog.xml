@@ -21,6 +21,8 @@
     xmlns:sysui="http://schemas.android.com/apk/res-auto"
     xmlns:systemui="http://schemas.android.com/apk/res/com.android.systemui"
     xmlns:aapt="http://schemas.android.com/aapt"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@drawable/rounded_bg_full">
 
