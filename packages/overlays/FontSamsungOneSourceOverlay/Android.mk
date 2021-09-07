@@ -17,7 +17,7 @@
 LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
 
-LOCAL_RRO_THEME := FontSamsungOneSourceOverlay
+LOCAL_RRO_THEME := FontSamsungOneSource
 LOCAL_CERTIFICATE := platform
 LOCAL_PRODUCT_MODULE := true
 

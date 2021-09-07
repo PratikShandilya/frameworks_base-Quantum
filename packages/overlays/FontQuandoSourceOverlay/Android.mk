@@ -17,7 +17,7 @@
 LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
 
-LOCAL_RRO_THEME := FontQuandoSourceOverlay
+LOCAL_RRO_THEME := FontQuandoSource
 LOCAL_CERTIFICATE := platform
 LOCAL_PRODUCT_MODULE := true
 

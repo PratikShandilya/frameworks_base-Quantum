@@ -36,13 +36,13 @@ LOCAL_REQUIRED_MODULES := \
 	FontArbutusSourceOverlay \
 	FontArvoLatoOverlay \
 	FontRubikRubikOverlay \
-        FontCagliostroSource \
+        FontCagliostroSourceOverlay \
         FontComicSansSourceOverlay \
         FontExotwoSourceOverlay \
         FontGoogleSansSourceOverlay \
-        FontOneplusSlateSource \
+        FontOneplusSlateSourceOverlay \
         FontQuandoSourceOverlay \
-        FontRosemarySource \
+        FontRosemarySourceOverlay \
         FontSamsungOneSourceOverlay \
         FontUbuntuSourceOverlay \
         FontBarlowSourceOverlay \

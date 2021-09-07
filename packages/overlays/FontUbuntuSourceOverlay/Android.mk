@@ -17,7 +17,7 @@
 LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
 
-LOCAL_RRO_THEME := FontUbuntuSourceOverlay
+LOCAL_RRO_THEME := FontUbuntuSource
 LOCAL_CERTIFICATE := platform
 LOCAL_PRODUCT_MODULE := true
 

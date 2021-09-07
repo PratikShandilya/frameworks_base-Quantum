@@ -17,7 +17,7 @@
 LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
 
-LOCAL_RRO_THEME := FontGSTextSourceOverlay
+LOCAL_RRO_THEME := FontGSTextSource
 LOCAL_CERTIFICATE := platform
 LOCAL_PRODUCT_MODULE := true
 
